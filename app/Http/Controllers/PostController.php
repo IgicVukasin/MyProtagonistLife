@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Activity;
-use App\ActivityTypes;
+use App\Post;
 use Illuminate\Http\Request;
 
-class ActivityController extends Controller
+class PostController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +15,17 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        return Activity::where('user_id', auth()->id())->get();
+        //
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        //
     }
 
     /**
@@ -26,48 +36,50 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        $activity = new Activity();
-        $activity->name = $request['name'];
-        $activity->description = $request['description'];
-        $activity->length = $request['length'];
-        $activity->expGained = $request['expGained'];
-        $activity->type = $request['type'];
-        $activity->user_id = auth()->id();
-        $activity->save();
-        return $activity;
+
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        return Activity::find($id)->where('user_id',  auth()->id())->firstOrFail();
+        //
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  \App\Post  $post
+     * @return \Illuminate\Http\Response
+     */
+    public function edit(Post $post)
+    {
+        //
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        $activity = Activity::find($id);
-        return $activity;
+        //
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  \App\Post  $post
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
         //
     }

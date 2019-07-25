@@ -18,6 +18,8 @@ class CreatePostsTable extends Migration
             $table->string('name');
             $table->string('data');
             $table->timestamps();
+            $table->bigInteger('user_id')->unsigned()->index(); // this is working
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

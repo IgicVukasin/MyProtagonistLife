@@ -21,6 +21,8 @@ class CreateActivitiesTable extends Migration
             $table->integer('expGained');
             $table->enum('type', ['Workout', 'Read', 'Study']);
             $table->timestamps();
+            $table->bigInteger('user_id')->unsigned()->index(); // this is working
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

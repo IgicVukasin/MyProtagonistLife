@@ -11,7 +11,12 @@ class Activity extends Model
     protected $description;
     protected $length;
     protected $expGained;
+    protected $user_id;
     protected $type;
 
-    protected $guarded = ["id"];
+    protected $guarded = ["id", "user_id"];
+
+    public function user(){
+        return $this->belongsTo(User::class);
+    }
 }
