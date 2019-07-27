@@ -30,8 +30,8 @@ class ActivityController extends Controller
         $activity->name = $request['name'];
         $activity->description = $request['description'];
         $activity->length = $request['length'];
-        $activity->expGained = $request['expGained'];
         $activity->type = $request['type'];
+        $activity->expGained = Activity::calculateExpGained($request['type'], $request['length']);
         $activity->user_id = auth()->id();
         $activity->save();
         return $activity;
@@ -57,8 +57,8 @@ class ActivityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $activity = Activity::find($id);
-        return $activity;
+        Activity::find($id)->where('user_id',  auth()->id())->firstOrFail()->update($request->all());
+        return $request;
     }
 
     /**
@@ -69,6 +69,6 @@ class ActivityController extends Controller
      */
     public function destroy($id)
     {
-        //
+        return Activity::find($id)->where('user_id',  auth()->id())->firstOrFail()->delete();
     }
 }

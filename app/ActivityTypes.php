@@ -3,7 +3,10 @@
 namespace App;
 
 abstract class ActivityTypes{
-    const Workout = "Workout";
-    const Read = "Read";
-    const Study = "Study";
+    const WORKOUT = "Workout";
+    const WORKOUT_VALUE = 89;
+    const READ = "Read";
+    const READ_VALUE = 82;
+    const STUDY = "Study";
+    const STUDY_VALUE = 86;
 }
