@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Activity;
-use App\ActivityTypes;
 use Illuminate\Http\Request;
+use App\User;
 
-class ActivityController extends Controller
+class UsersController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +14,7 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        return Activity::where('user_id', auth()->id())->get();
+        return User::all();
     }
 
     /**
@@ -26,17 +25,7 @@ class ActivityController extends Controller
      */
     public function store(Request $request)
     {
-        $activity = new Activity();
-        $activity->name = $request['name'];
-        $activity->description = $request['description'];
-        $activity->length = $request['length'];
-        // $activity->type = $request['type'];
-        // $activity->expGained = Activity::calculateExpGained($request['type'], $request['length']);
-        $activity->type = 'Workout';
-        $activity->expGained = Activity::calculateExpGained('Workout', $request['length']);
-        $activity->user_id = auth()->id();
-        $activity->save();
-        return $activity;
+        //
     }
 
     /**
@@ -47,7 +36,7 @@ class ActivityController extends Controller
      */
     public function show($id)
     {
-        return Activity::find($id)->where('user_id',  auth()->id())->firstOrFail();
+        //
     }
 
     /**
@@ -59,8 +48,7 @@ class ActivityController extends Controller
      */
     public function update(Request $request, $id)
     {
-        Activity::find($id)->where('user_id',  auth()->id())->firstOrFail()->update($request->all());
-        return $request;
+        //
     }
 
     /**
@@ -71,6 +59,6 @@ class ActivityController extends Controller
      */
     public function destroy($id)
     {
-        return Activity::find($id)->where('user_id',  auth()->id())->firstOrFail()->delete();
+        //
     }
 }

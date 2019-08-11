@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware('auth:api')->resource('activity', 'ActivityController');
 Route::middleware('auth:api')->resource('post', 'PostController');
 Route::middleware('auth:api')->resource('follow', 'FollowController');
+Route::middleware('auth:api')->resource('users', 'UsersController');
 
 Route::group([
     'middleware' => 'api',

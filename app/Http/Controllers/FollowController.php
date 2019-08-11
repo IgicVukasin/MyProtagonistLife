@@ -23,7 +23,11 @@ class FollowController extends Controller
      */
     public function store(Request $request)
     {
-        return auth()->user()->follow($request->id);
+        if($request->id === auth()->user()->id){
+            return 'You cant follow yourself';
+        }
+        auth()->user()->follow($request->id);
+        return "Successfully followed";
     }
 
     /**
