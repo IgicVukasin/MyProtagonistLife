@@ -7,6 +7,7 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Support\Facades\DB;
 
 class User extends Authenticatable implements JWTSubject
 {
@@ -64,7 +65,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function followers()
     {
-        return $this->belongsToMany('App\User', 'users_following', 'user_id', 'following_id');
+        return $this->belongsToMany('App\User', 'users_following', 'user_id', 'following_id')->as('follow');
     }
 
     public function follow($userId)
@@ -75,5 +76,19 @@ class User extends Authenticatable implements JWTSubject
     public function unfollow($userId)
     {
         $this->followers()->detach($uuserId);
+    }
+
+    public function following()
+    {
+        $following = DB::table('users')
+            ->leftJoin('users_following', 'users.id', '=', 'users_following.user_id')
+            ->where('users.id', '=', $this->id)
+            ->select('users_following.following_id')
+            ->get();
+        $followingIds = [];
+        foreach($following as $follow){
+            array_push($followingIds, $follow->following_id);
+        }
+        return $followingIds;
     }
 }

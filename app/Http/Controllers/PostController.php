@@ -8,6 +8,14 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
+    public function feed(){
+        $followingIds = auth()->user()->following();
+        return Post::whereIn('user_id', $followingIds)
+            ->where('user_id', '!=', auth()->id())
+            ->leftJoin('users', 'users.id', '=', 'posts.user_id')
+            ->select('posts.*', 'users.name as user_name')
+            ->paginate(10);
+    }
     /**
      * Display a listing of the resource.
      *

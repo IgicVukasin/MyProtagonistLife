@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use App\User;
+use App\Activity;
+use App\Post;
 
 class UsersController extends Controller
 {
@@ -14,7 +17,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return User::all();
+        return User::where('id', '!=', auth()->id())->get();
     }
 
     /**

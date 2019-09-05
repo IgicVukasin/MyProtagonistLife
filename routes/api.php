@@ -17,6 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::middleware('auth:api')->get('activity/feed', 'ActivityController@feed');
+Route::middleware('auth:api')->get('post/feed', 'PostController@feed');
 Route::middleware('auth:api')->resource('activity', 'ActivityController');
 Route::middleware('auth:api')->resource('post', 'PostController');
 Route::middleware('auth:api')->resource('follow', 'FollowController');

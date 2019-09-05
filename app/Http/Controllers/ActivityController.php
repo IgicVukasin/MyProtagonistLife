@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Activity;
+use App\User;
 use App\ActivityTypes;
 use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
+    public function feed(){
+        $followingIds = auth()->user()->following();
+        return Activity::whereIn('user_id', $followingIds)
+            ->where('user_id', '!=', auth()->id())
+            ->leftJoin('users', 'users.id', '=', 'activities.user_id')
+            ->select('activities.*', 'users.name as user_name')
+            ->paginate(10);
+    }
     /**
      * Display a listing of the resource.
      *
