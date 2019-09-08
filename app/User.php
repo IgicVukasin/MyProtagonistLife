@@ -75,7 +75,7 @@ class User extends Authenticatable implements JWTSubject
 
     public function unfollow($userId)
     {
-        $this->followers()->detach($uuserId);
+        $this->followers()->detach($userId);
     }
 
     public function following()

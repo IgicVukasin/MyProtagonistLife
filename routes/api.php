@@ -26,6 +26,7 @@ Route::middleware('auth:api')->resource('activity', 'ActivityController');
 Route::middleware('auth:api')->resource('post', 'PostController');
 Route::middleware('auth:api')->resource('follow', 'FollowController');
 Route::middleware('auth:api')->resource('users', 'UsersController');
+Route::middleware('auth:api')->resource('admin', 'AdminController');
 
 Route::group([
     'middleware' => 'api',
