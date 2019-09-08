@@ -42,6 +42,12 @@ class UsersController extends Controller
         return User::where('id', '=', $id)->get();
     }
 
+    public function search(Request $request)
+    {
+        return User::where('email' ,'like', '%'.$request->name.'%')
+        ->orWhere('name', 'like', '%' . $request->name . '%')->paginate(10);
+    }
+
     /**
      * Update the specified resource in storage.
      *
@@ -51,7 +57,8 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        User::find($id)->where('id',  $id)->andWhere('user_id', auth()->id())->firstOrFail()->update($request->all());
+        return $request;
     }
 
     /**
@@ -62,7 +69,11 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if($id === auth()->id()){
+            return User::find($id)->where('id',  $id)->firstOrFail()->delete();
+        } else {
+            return "You cant delete other users";
+        }
     }
 
     public function following()

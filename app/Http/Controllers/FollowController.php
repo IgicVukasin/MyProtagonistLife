@@ -52,13 +52,7 @@ class FollowController extends Controller
         //
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function unfollow(Request $request)
     {
         if($request->id === auth()->user()->id){
             return 'You cant unfollow yourself';

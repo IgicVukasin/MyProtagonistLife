@@ -20,6 +20,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::middleware('auth:api')->get('activity/feed', 'ActivityController@feed');
 Route::middleware('auth:api')->get('post/feed', 'PostController@feed');
 Route::middleware('auth:api')->get('users/following', 'UsersController@following');
+Route::middleware('auth:api')->get('users/search/{name}', 'UsersController@search');
+Route::middleware('auth:api')->post('follow/unfollow', 'FollowController@unfollow');
 Route::middleware('auth:api')->resource('activity', 'ActivityController');
 Route::middleware('auth:api')->resource('post', 'PostController');
 Route::middleware('auth:api')->resource('follow', 'FollowController');
