@@ -14,6 +14,7 @@ class PostController extends Controller
             ->where('user_id', '!=', auth()->id())
             ->leftJoin('users', 'users.id', '=', 'posts.user_id')
             ->select('posts.*', 'users.name as user_name')
+            >orderBy('posts.created_at', 'desc')
             ->paginate(10);
     }
     /**

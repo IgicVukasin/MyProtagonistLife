@@ -60,6 +60,10 @@ class FollowController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if($request->id === auth()->user()->id){
+            return 'You cant unfollow yourself';
+        }
+        auth()->user()->unfollow($request->id);
+        return "Successfully followed";
     }
 }

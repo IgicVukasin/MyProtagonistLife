@@ -15,6 +15,7 @@ class ActivityController extends Controller
             ->where('user_id', '!=', auth()->id())
             ->leftJoin('users', 'users.id', '=', 'activities.user_id')
             ->select('activities.*', 'users.name as user_name')
+            ->orderBy('activities.created_at', 'desc')
             ->paginate(10);
     }
     /**

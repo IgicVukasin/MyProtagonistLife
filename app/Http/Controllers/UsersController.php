@@ -17,7 +17,7 @@ class UsersController extends Controller
      */
     public function index()
     {
-        return User::where('id', '!=', auth()->id())->get();
+        return User::where('id', '!=', auth()->id())->paginate(10);
     }
 
     /**
@@ -63,5 +63,10 @@ class UsersController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function following()
+    {
+        return auth()->user()->following();
     }
 }
