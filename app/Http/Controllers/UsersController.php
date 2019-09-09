@@ -57,8 +57,11 @@ class UsersController extends Controller
      */
     public function update(Request $request, $id)
     {
-        User::find($id)->where('id',  $id)->andWhere('user_id', auth()->id())->firstOrFail()->update($request->all());
-        return $request;
+        if(auth()->id() === $id){
+            User::find($id)->where('id',  $id)->firstOrFail()->update($request->all());
+            return $request;
+        }
+        return "Unauthorized";
     }
 
     /**
@@ -69,7 +72,7 @@ class UsersController extends Controller
      */
     public function destroy($id)
     {
-        if($id === auth()->id()){
+        if($id == auth()->id()){
             return User::find($id)->where('id',  $id)->firstOrFail()->delete();
         } else {
             return "You cant delete other users";

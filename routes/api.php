@@ -17,10 +17,13 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::middleware('auth:api')->get('activity/feed', 'ActivityController@feed');
-Route::middleware('auth:api')->get('post/feed', 'PostController@feed');
+Route::middleware('auth:api')->get('users/{id}/activity', 'ActivityController@usersActivities');
+Route::middleware('auth:api')->get('users/{id}/post', 'PostController@usersPosts');
+Route::middleware('auth:api')->get('activity/feed/{order}', 'ActivityController@feed');
+Route::middleware('auth:api')->get('post/feed/{order}', 'PostController@feed');
 Route::middleware('auth:api')->get('users/following', 'UsersController@following');
 Route::middleware('auth:api')->get('users/search/{name}', 'UsersController@search');
+Route::middleware('auth:api')->get('admin/pdf', 'AdminController@pdf');
 Route::middleware('auth:api')->post('follow/unfollow', 'FollowController@unfollow');
 Route::middleware('auth:api')->resource('activity', 'ActivityController');
 Route::middleware('auth:api')->resource('post', 'PostController');

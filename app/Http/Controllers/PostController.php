@@ -8,13 +8,17 @@ use Illuminate\Http\Request;
 
 class PostController extends Controller
 {
-    public function feed(){
+    public function feed(Request $request){
         $followingIds = auth()->user()->following();
+        $order = 'desc';
+        if($request->order === 'asc'){
+            $order = $request->order;
+        }
         return Post::whereIn('user_id', $followingIds)
             ->where('user_id', '!=', auth()->id())
             ->leftJoin('users', 'users.id', '=', 'posts.user_id')
             ->select('posts.*', 'users.name as user_name')
-            >orderBy('posts.created_at', 'desc')
+            ->orderBy('posts.created_at', $order)
             ->paginate(10);
     }
     /**
@@ -52,6 +56,11 @@ class PostController extends Controller
     public function show($id)
     {
         return Post::find($id)->where('user_id',  auth()->id())->firstOrFail();
+    }
+
+    public function usersPosts(Request $request)
+    {
+        return Post::where('user_id',  $request->id)->get();
     }
 
 

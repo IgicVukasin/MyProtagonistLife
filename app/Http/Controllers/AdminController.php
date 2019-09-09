@@ -4,9 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\User;
+use App;
 
 class AdminController extends Controller
 {
+    public function pdf()
+    {
+        $pdf = App::make('dompdf.wrapper');
+        $pdf->loadHTML('<h1>Test</h1>');
+        return $pdf->stream();
+    }
     /**
      * Display a listing of the resource.
      *
@@ -14,8 +21,8 @@ class AdminController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->role === 1){
-            return User::all()->leftJoin('activities', 'activities.user_id', '=', 'user.id')->get();
+        if(auth()->user()->role === 3){
+            return User::where('id', '!=', auth()->id())->paginate(10);
 
         }
         return "Unauthorized";
@@ -84,6 +91,10 @@ class AdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        if(auth()->user()->role === 3){
+            return User::find($id)->where('id',  $id)->firstOrFail()->delete();
+
+        }
+        return "Unauthorized";
     }
 }

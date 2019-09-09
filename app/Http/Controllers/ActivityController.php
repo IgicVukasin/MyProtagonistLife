@@ -9,13 +9,17 @@ use Illuminate\Http\Request;
 
 class ActivityController extends Controller
 {
-    public function feed(){
+    public function feed(Request $request){
         $followingIds = auth()->user()->following();
+        $order = 'desc';
+        if($request->order === 'asc'){
+            $order = $request->order;
+        }
         return Activity::whereIn('user_id', $followingIds)
             ->where('user_id', '!=', auth()->id())
             ->leftJoin('users', 'users.id', '=', 'activities.user_id')
             ->select('activities.*', 'users.name as user_name')
-            ->orderBy('activities.created_at', 'desc')
+            ->orderBy('activities.created_at', $order)
             ->paginate(10);
     }
     /**
@@ -25,7 +29,8 @@ class ActivityController extends Controller
      */
     public function index()
     {
-        return Activity::where('user_id', auth()->id())->get();
+        
+        return Activity::where('user_id', auth()->id())->orderBy('activities.created_at', 'asc')->get();
     }
 
     /**
@@ -58,6 +63,11 @@ class ActivityController extends Controller
     public function show($id)
     {
         return Activity::find($id)->where('user_id',  auth()->id())->firstOrFail();
+    }
+
+    public function usersActivities(Request $request)
+    {
+        return Activity::where('user_id',  $request->id)->get();
     }
 
     /**
